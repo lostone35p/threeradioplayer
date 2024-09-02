@@ -1,5 +1,4 @@
 import {
-	useTexture,
 	ScreenSpace,
 	ScreenSizer,
 	Billboard,
