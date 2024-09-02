@@ -1,9 +1,8 @@
-import { OrbitControls, PerspectiveCamera, Text } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Stage from "./Stage";
-import { Suspense, useEffect, useRef, useState } from "react";
-import { degToRad } from "three/src/math/MathUtils.js";
-import { CurrentlyPlaying, SongPicker } from "./SongPicker";
+import { useRef } from "react";
+import { SongPicker } from "./SongPicker";
 
 const panningMax = (value: number): number => {
 	if (value > 30) {
