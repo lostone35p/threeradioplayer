@@ -55,7 +55,6 @@ const useRadioData = (name: string, api: string) => {
 };
 
 export function SongPicker() {
-	const boxTexture = useTexture("/Textures/boxTexture.jpg");
 	const [playingRadio, setPlayingRadio] = useState<string | null>(null);
 
 	const currentRadio = radioList.find((r) => r.name === playingRadio);
