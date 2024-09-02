@@ -61,7 +61,7 @@ export const Effects = () => {
 		<EffectComposer>
 			<Scanline
 				blendFunction={BlendFunction.MULTIPLY}
-				density={2.25}
+				density={1}
 				scrollSpeed={0.01}
 				opacity={0.3}
 			/>
