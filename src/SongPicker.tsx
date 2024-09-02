@@ -162,7 +162,9 @@ export function CurrentlyPlaying({ props }: CurrentlyPlayingProps) {
 			anchorX={"center"}
 			anchorY={"middle"}
 			rotation-y={degToRad(90)}
-			position={[0, 7, 0]}
+			position={[0, 7, -0.5]}
+			maxWidth={12}
+			outlineWidth={0.03}
 			fontSize={1}>
 			{radioData
 				? "main" in radioData
