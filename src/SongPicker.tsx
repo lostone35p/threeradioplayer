@@ -9,8 +9,8 @@ import {
 	Text,
 	Html,
 } from "@react-three/drei";
-import { useState, useEffect } from "react";
-import { degToRad } from "three/src/math/MathUtils.js";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { degToRad, radToDeg } from "three/src/math/MathUtils.js";
 import { audioController } from "./audioController";
 import { radioList } from "./radioInterfaces";
 
@@ -22,6 +22,9 @@ import {
 	doujinStyleApi,
 	doujinDanceApi,
 } from "./radioInterfaces";
+import { useThree, useFrame } from "@react-three/fiber";
+
+import * as THREE from "three";
 
 const fetchRadioData = async (api: string, name: string) => {
 	const { data } = await axios.get(api);
@@ -145,6 +148,7 @@ export function SongPicker() {
 					</Billboard>
 				</ScreenSizer>
 			</ScreenSpace>
+			<AudioVisualizer analyser={audioController.getAnalyser()} />
 			<CurrentlyPlaying props={radioData} />
 		</group>
 	);
@@ -178,5 +182,53 @@ export function CurrentlyPlaying({ props }: CurrentlyPlayingProps) {
 								: "Unknown Radio: Unknown track"
 				: "Loading..."}
 		</Text>
+	);
+}
+
+interface AudioVisualizerProps {
+	analyser: AnalyserNode | null;
+}
+
+export function AudioVisualizer({ analyser }: AudioVisualizerProps) {
+	const barsRef = useRef<THREE.Mesh[]>([]);
+
+	const bars = useMemo(
+		() =>
+			Array.from({ length: 32 }, (_, i) => (
+				<Box
+					key={i}
+					ref={(el) => {
+						if (el) barsRef.current[i] = el;
+					}}
+					args={[0.3, 1, 0.3]}
+					position={[i * 0.4 - 6, 0, -5]}>
+					<meshNormalMaterial wireframe />
+				</Box>
+			)),
+		[]
+	);
+
+	useFrame(() => {
+		if (analyser) {
+			const dataArray = new Uint8Array(analyser.frequencyBinCount);
+			analyser.getByteFrequencyData(dataArray);
+
+			for (let i = 0; i < barsRef.current.length; i++) {
+				const bar = barsRef.current[i];
+				if (bar) {
+					const value = dataArray[i * 2];
+					const scale = value / 128 + 0.1;
+					bar.scale.y = scale * 1.5;
+				}
+			}
+		}
+	});
+
+	return (
+		<group>
+			<group scale={5} position={[20, 2, -18]} rotation-y={degToRad(90)}>
+				{bars}
+			</group>
+		</group>
 	);
 }
