@@ -1,8 +1,16 @@
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, SpotLight } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Stage from "./Stage";
 import { useRef } from "react";
 import { SongPicker } from "./SongPicker";
+import {
+	Bloom,
+	DepthOfField,
+	EffectComposer,
+	Scanline,
+	Vignette,
+} from "@react-three/postprocessing";
+import { BlendFunction } from "postprocessing";
 
 const panningMax = (value: number): number => {
 	if (value > 30) {
@@ -17,7 +25,6 @@ const panningMax = (value: number): number => {
 
 function App() {
 	const controls = useRef<any>();
-
 	return (
 		<div className="flex h-lvh w-lvw">
 			<Canvas>
@@ -40,12 +47,38 @@ function App() {
 					position={[25, 10, 0]}
 					fov={45}
 					makeDefault></PerspectiveCamera>
-				<directionalLight position={[0, 30, 0]} intensity={2} />
+				<directionalLight position={[0, 30, 0]} intensity={3} />
 				<SongPicker />
+				<Effects />
 				<Stage scale={0.1} />
 			</Canvas>
 		</div>
 	);
 }
 
+export const Effects = () => {
+	return (
+		<EffectComposer>
+			<Scanline
+				blendFunction={BlendFunction.MULTIPLY}
+				density={2.25}
+				scrollSpeed={0.01}
+				opacity={0.3}
+			/>
+			<DepthOfField
+				focusDistance={0}
+				focalLength={0.05}
+				bokehScale={2}
+				height={300}
+			/>
+			<Vignette eskil={true} offset={1} darkness={1.1} />
+			<Bloom
+				intensity={0.4}
+				luminanceThreshold={0.3}
+				luminanceSmoothing={0.5}
+				height={300}
+			/>
+		</EffectComposer>
+	);
+};
 export default App;

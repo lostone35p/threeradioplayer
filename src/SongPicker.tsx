@@ -8,6 +8,7 @@ import {
 	Box,
 	Text,
 	Html,
+	Image,
 } from "@react-three/drei";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { degToRad } from "three/src/math/MathUtils.js";
@@ -108,6 +109,7 @@ export function SongPicker() {
 											rotation-y={degToRad(20)}
 											args={[10, 3, 0.5]}
 											position={[0, -4 * index, 0]}
+											renderOrder={10}
 											key={index}>
 											<Html transform occlude>
 												<div
@@ -115,7 +117,7 @@ export function SongPicker() {
 													onPointerDown={(e) => e.stopPropagation()}>
 													<div>
 														<img
-															className=" w-20 h-20 rounded-full"
+															className=" w-auto h-24 aspect-square rounded-full"
 															src={radio.image}
 														/>
 													</div>
@@ -150,6 +152,11 @@ export function SongPicker() {
 			</ScreenSpace>
 			<AudioVisualizer analyser={audioController.getAnalyser()} />
 			<CurrentlyPlaying props={radioData} />
+			<Image
+				position={[0, 6.3, 0]}
+				url="/fallback/erika.png"
+				scale={[10, 5]}
+				rotation-y={degToRad(90)}></Image>
 		</group>
 	);
 }
@@ -159,14 +166,13 @@ interface CurrentlyPlayingProps {
 }
 
 export function CurrentlyPlaying({ props }: CurrentlyPlayingProps) {
-	console.log(props);
 	const radioData = props;
 	return (
 		<Text
 			anchorX={"center"}
 			anchorY={"middle"}
 			rotation-y={degToRad(90)}
-			position={[0, 7, -0.5]}
+			position={[1, 7, 0]}
 			maxWidth={12}
 			outlineWidth={0.03}
 			fontSize={1}>
@@ -180,7 +186,7 @@ export function CurrentlyPlaying({ props }: CurrentlyPlayingProps) {
 							: "now_playing" in radioData
 								? `${(radioData as doujinDanceApi).now_playing.song.artist} - ${(radioData as doujinDanceApi).now_playing.song.title}`
 								: "Unknown Radio: Unknown track"
-				: "Loading..."}
+				: "Nothing Playing"}
 		</Text>
 	);
 }

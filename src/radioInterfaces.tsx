@@ -3,7 +3,7 @@ export const radioList = [
 		name: "r/a/dio",
 		url: "https://r-a-d.io/",
 		api: "https://r-a-d.io/api",
-		stream: "https://stream.r-a-d.io/main.mp3",
+		stream: "https://relay0.r-a-d.io/main.mp3",
 		image: "https://r-a-d.io/assets/logo_image_small.png",
 	},
 	{
