@@ -10,7 +10,7 @@ import {
 	Html,
 } from "@react-three/drei";
 import { useState, useEffect, useRef, useMemo } from "react";
-import { degToRad, radToDeg } from "three/src/math/MathUtils.js";
+import { degToRad } from "three/src/math/MathUtils.js";
 import { audioController } from "./audioController";
 import { radioList } from "./radioInterfaces";
 
@@ -22,7 +22,7 @@ import {
 	doujinStyleApi,
 	doujinDanceApi,
 } from "./radioInterfaces";
-import { useThree, useFrame } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 
 import * as THREE from "three";
 

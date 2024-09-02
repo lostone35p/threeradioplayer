@@ -6,7 +6,6 @@ class AudioController {
   private audioElements: Map<string, HTMLAudioElement> = new Map();
   private currentRadio: string | null = null;
   private audioContext: AudioContext | null = null;
-  private sourceNode: MediaElementAudioSourceNode | null = null;
   private analyser: AnalyserNode | null = null;
 
 
