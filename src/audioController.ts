@@ -48,6 +48,7 @@ class AudioController {
     this.analyser.fftSize = 64;
 
     try {
+      audio.load()
       // Connect the audio element to the analyser
       const source = this.audioContext.createMediaElementSource(audio);
       source.connect(this.analyser);
@@ -70,7 +71,7 @@ class AudioController {
       const audio = this.audioElements.get(this.currentRadio);
       if (audio) {
         audio.pause();
-        audio.currentTime = 0;
+        audio.src = audio.src
       }
       this.currentRadio = null;
       this.analyser = null;
