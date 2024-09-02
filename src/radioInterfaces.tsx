@@ -49,6 +49,7 @@ export const radioList = [
 // Interface for r/a/dio api
 export interface radioApi {
 	main: {
+		np: string;
 		currently: string;
 		listeners: number;
 		bitrate: number;

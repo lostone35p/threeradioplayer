@@ -1,27 +1,9 @@
-import {
-	Billboard,
-	Box,
-	Html,
-	OrbitControls,
-	PerspectiveCamera,
-	ScreenSizer,
-	ScreenSpace,
-	Scroll,
-	ScrollControls,
-	Text,
-	useTexture,
-} from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Stage from "./Stage";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { degToRad } from "three/src/math/MathUtils.js";
-
-import {
-	radioList,
-	radioApi,
-	doujinDanceApi,
-	doujinStyleApi,
-} from "./radioInterfaces";
+import { CurrentlyPlaying, SongPicker } from "./SongPicker";
 
 const panningMax = (value: number): number => {
 	if (value > 30) {
@@ -33,86 +15,6 @@ const panningMax = (value: number): number => {
 
 	return value;
 };
-
-interface CurrentlyPlayingProps {
-	props: string;
-}
-
-export function CurrentlyPlaying({ props }: CurrentlyPlayingProps) {
-	return (
-		<Text
-			anchorX={"center"}
-			anchorY={"middle"}
-			rotation-y={degToRad(90)}
-			position={[0, 63, 0]}
-			fontSize={4}>
-			{props}
-			{/* <meshBasicMaterial attach="material" color="white">
-				<RenderTexture attach={"map"}>
-					<color attach={"background"} args={["#fff"]} />
-					<Stage scale={2} />
-				</RenderTexture>
-			</meshBasicMaterial> */}
-		</Text>
-	);
-}
-
-function SongPicker() {
-	const boxTexture = useTexture("/Textures/boxTexture.jpg");
-
-	return (
-		<ScreenSpace depth={20}>
-			<ScreenSizer scale={5}>
-				<Billboard follow={false} position={[-20, 10, 1]} castShadow={true}>
-					<ScrollControls
-						pages={1.5}
-						damping={0.05}
-						maxSpeed={0.05}
-						distance={0.01}>
-						<Scroll>
-							<group>
-								{radioList.map((radio, index) => (
-									<Box
-										rotation-y={degToRad(20)}
-										args={[10, 3, 0.5]}
-										position={[0, -4 * index, 0]}
-										key={index}>
-										<Html transform occlude>
-											<div
-												className="columns-4 flex align-middle justify-around w-96 items-center"
-												onPointerDown={(e) => e.stopPropagation()}>
-												<div>
-													<img
-														className=" w-20 h-20 rounded-full"
-														src={radio.image}
-													/>
-												</div>
-												<div className=" items-center flex flex-col">
-													<h2 className=" text-3xl">{radio.name}</h2>
-													<p>Playing: </p>
-												</div>
-												<div className=" items-center flex">
-													<h1>⏯</h1>
-												</div>
-											</div>
-										</Html>
-										<meshStandardMaterial
-											depthTest={false}
-											map={boxTexture}
-											emissive={"pink"}
-											emissiveIntensity={0.5}
-											toneMapped={false}
-										/>
-									</Box>
-								))}
-							</group>
-						</Scroll>
-					</ScrollControls>
-				</Billboard>
-			</ScreenSizer>
-		</ScreenSpace>
-	);
-}
 
 function App() {
 	const controls = useRef<any>();
@@ -141,7 +43,6 @@ function App() {
 					makeDefault></PerspectiveCamera>
 				<directionalLight position={[0, 30, 0]} intensity={2} />
 				<SongPicker />
-				<CurrentlyPlaying props="Currently Playing:" />
 				<Stage scale={0.1} />
 			</Canvas>
 		</div>
