@@ -48,9 +48,9 @@ function App() {
 					fov={45}
 					makeDefault></PerspectiveCamera>
 				<directionalLight position={[0, 30, 0]} intensity={3} />
-				<SongPicker />
 				<Effects />
 				<Stage scale={0.1} />
+				<SongPicker />
 			</Canvas>
 		</div>
 	);

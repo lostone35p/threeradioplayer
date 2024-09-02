@@ -103,13 +103,12 @@ export function SongPicker() {
 							maxSpeed={0.05}
 							distance={0.01}>
 							<Scroll>
-								<group>
+								<group renderOrder={10}>
 									{radioList.map((radio, index) => (
 										<Box
 											rotation-y={degToRad(20)}
 											args={[10, 3, 0.5]}
 											position={[0, -4 * index, 0]}
-											renderOrder={10}
 											key={index}>
 											<Html transform occlude>
 												<div
@@ -134,13 +133,8 @@ export function SongPicker() {
 												</div>
 											</Html>
 											<meshStandardMaterial
-												depthTest={false}
-												map={boxTexture}
-												emissive={
-													playingRadio === radio.name ? "green" : "pink"
-												}
-												emissiveIntensity={0.5}
-												toneMapped={false}
+												emissive={playingRadio === radio.name ? "red" : "pink"}
+												emissiveIntensity={0.7}
 											/>
 										</Box>
 									))}
