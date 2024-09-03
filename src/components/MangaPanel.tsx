@@ -15,12 +15,12 @@ const MangaPanel = React.memo(() => {
 		return (
 			<group>
 				<Image
-					position={[0, 6.3, 0]}
+					position={[0, 6, 0]}
 					url={imageUrl}
-					scale={[10, 5]}
+					scale={[12, 6]}
 					rotation-y={degToRad(90)}
 				/>
-				<group position={[0, 8.5, -5.4]} rotation-y={degToRad(90)}>
+				<group position={[0, 8, -6.5]} rotation-y={degToRad(90)}>
 					<Circle onClick={() => refetch()} scale={0.2}></Circle>
 					<Text position={[0.5, -1, 0]} fontSize={0.3}>
 						{" "}
