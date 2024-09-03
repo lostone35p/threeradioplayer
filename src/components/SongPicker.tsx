@@ -133,7 +133,7 @@ export function SongPicker() {
 											</Html>
 											<meshStandardMaterial
 												emissive={playingRadio === radio.name ? "red" : "pink"}
-												emissiveIntensity={0.7}
+												emissiveIntensity={0.6}
 											/>
 										</Box>
 									))}
