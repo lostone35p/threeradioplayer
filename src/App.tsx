@@ -15,7 +15,7 @@ import {
 	Vignette,
 } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-import MangaPanel, { Loadingimage } from "./components/MangaPanel";
+import MangaPanel from "./components/MangaPanel";
 
 const panningMax = (value: number): number => {
 	if (value > 30) {
