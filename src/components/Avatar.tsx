@@ -15,6 +15,7 @@ export const Avatar = (isPlaying: AvatarProps) => {
 	const [isDancing, setIsDancing] = useState(false);
 
 	const ref = useRef<any>();
+	const isReversedRef = useRef(false);
 
 	const clips = useClips(vrm);
 	const { mixer, actions } = useAnimations(clips, vrm.scene);
@@ -38,22 +39,53 @@ export const Avatar = (isPlaying: AvatarProps) => {
 
 		const fadeTime = 2; // Adjust this value for faster or slower transitions
 
-		console.log(isDancing);
 		if (isPlaying.isPlaying && !isDancing) {
 			actions.idle.fadeOut(fadeTime);
 			ref.current.position.y = 0;
 			ref.current.position.x = 10;
-			actions.dance2.clampWhenFinished = false;
 			actions.dance2.fadeIn(fadeTime).play();
+
 			setIsDancing(true);
 		} else if (!isPlaying.isPlaying && isDancing) {
+			ref.current.position.y = 2;
+			ref.current.position.x = 11;
 			actions.dance2.fadeOut(fadeTime).stop();
 			actions.idle.reset().fadeIn(fadeTime).play();
 			setIsDancing(false);
 		}
 	}, [isPlaying, actions]);
 
+	useFrame(() => {
+		if (actions.dance2 && actions.dance2.isRunning()) {
+			const clip = actions.dance2.getClip();
+
+			// Check if the animation has reached its end or start
+			if (
+				(actions.dance2.time >= clip.duration - 0.1 &&
+					!isReversedRef.current) ||
+				(actions.dance2.time <= 0 && isReversedRef.current)
+			) {
+				// Reverse the animation
+				actions.dance2.setEffectiveTimeScale(actions.dance2.timeScale * -1);
+				isReversedRef.current = !isReversedRef.current;
+			}
+		}
+	});
+
 	useFrame((_, delta) => {
+		if (actions.dance2 && actions.dance2.isRunning()) {
+			const clip = actions.dance2.getClip();
+
+			if (
+				(actions.dance2.time >= clip.duration - 0.1 &&
+					!isReversedRef.current) ||
+				(actions.dance2.time <= 0.1 && isReversedRef.current)
+			) {
+				actions.dance2.setEffectiveTimeScale(actions.dance2.timeScale * -1);
+				isReversedRef.current = !isReversedRef.current;
+			}
+		}
+
 		vrm.update(delta);
 		mixer.update(delta);
 	});
