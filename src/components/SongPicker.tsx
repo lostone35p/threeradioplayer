@@ -97,11 +97,11 @@ export function SongPicker() {
 					<Billboard follow={false} position={[-20, 10, 1]} castShadow={true}>
 						<ScrollControls
 							pages={1}
-							damping={0.05}
+							damping={0.01}
 							maxSpeed={0.05}
 							distance={0.01}>
 							<Scroll>
-								<group renderOrder={10}>
+								<group>
 									{radioList.map((radio, index) => (
 										<Box
 											rotation-y={degToRad(20)}
@@ -133,7 +133,8 @@ export function SongPicker() {
 											<meshStandardMaterial
 												emissive={playingRadio === radio.name ? "red" : "pink"}
 												emissiveIntensity={0.6}
-											/>
+												polygonOffset={true}
+												polygonOffsetFactor={-3000}></meshStandardMaterial>
 										</Box>
 									))}
 								</group>

@@ -60,7 +60,7 @@ function App() {
 							rotateSpeed={0.05}
 						/>
 						<PerspectiveCamera
-							position={[25, 10, 0]}
+							position={[25, 8, 0]}
 							fov={45}
 							makeDefault></PerspectiveCamera>
 						<directionalLight position={[0, 30, 0]} intensity={3} />
