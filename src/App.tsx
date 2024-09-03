@@ -67,7 +67,7 @@ function App() {
 						<Effects />
 						<Stage scale={0.1} />
 						<SongPicker />
-						<Suspense fallback={<Loadingimage />}>
+						<Suspense fallback={null}>
 							<MangaPanel />
 						</Suspense>
 					</PerformanceMonitor>
