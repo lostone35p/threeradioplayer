@@ -28,7 +28,6 @@ import { Avatar } from "./Avatar";
 
 const fetchRadioData = async (api: string, name: string) => {
 	const { data } = await axios.get(api);
-	console.log(name);
 
 	switch (name) {
 		case "r/a/dio":
