@@ -55,23 +55,6 @@ export const Avatar = (isPlaying: AvatarProps) => {
 		}
 	}, [isPlaying, actions]);
 
-	useFrame(() => {
-		if (actions.dance2 && actions.dance2.isRunning()) {
-			const clip = actions.dance2.getClip();
-
-			// Check if the animation has reached its end or start
-			if (
-				(actions.dance2.time >= clip.duration - 0.1 &&
-					!isReversedRef.current) ||
-				(actions.dance2.time <= 0 && isReversedRef.current)
-			) {
-				// Reverse the animation
-				actions.dance2.setEffectiveTimeScale(actions.dance2.timeScale * -1);
-				isReversedRef.current = !isReversedRef.current;
-			}
-		}
-	});
-
 	useFrame((_, delta) => {
 		if (actions.dance2 && actions.dance2.isRunning()) {
 			const clip = actions.dance2.getClip();
