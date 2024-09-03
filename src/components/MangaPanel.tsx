@@ -1,19 +1,17 @@
 import useRandomPanel from "../hooks/useRandomPanel";
 import { Circle, Text, Image } from "@react-three/drei";
-import { useRef } from "react";
 import { degToRad } from "three/src/math/MathUtils.js";
 
 function MangaPanel() {
-	const { data, refetch } = useRandomPanel();
+	const { data, isLoading, isError, refetch } = useRandomPanel();
 
 	const imageUrl = data?.randomPanel?.image_url || "/fallback/erika.png";
 
-	const ref = useRef<any>();
-	console.log(ref.current);
+	if (isLoading) return <Text>Loading...</Text>;
+	if (isError) return <Text>Error loading manga panel</Text>;
 	return (
 		<mesh>
 			<Image
-				ref={ref}
 				position={[0, 6.3, 0]}
 				url={imageUrl}
 				scale={[10, 5]}

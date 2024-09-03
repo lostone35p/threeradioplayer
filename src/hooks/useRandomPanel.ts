@@ -1,4 +1,4 @@
-const randomWords = ['manga', 'anime', 'japan', 'tokyo', 'samurai', 'ninja', 'sushi', 'kawaii', 'sakura', 'cute', "shamiko", "jujutsu", "chainsaw", "touhou", "vagabond", "titan"];
+const randomWords = ['manga', 'anime', 'japan', 'tokyo', 'samurai', 'ninja', 'sushi', 'kawaii', 'sakura', 'cute', "shamiko", "jujutsu", "chainsaw", "touhou", "vagabond", "titan", "peak", "dark"];
 
 function getRandomWord() {
     return randomWords[Math.floor(Math.random() * randomWords.length)];
