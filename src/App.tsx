@@ -4,9 +4,9 @@ import {
 	PerspectiveCamera,
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import Stage from "./Stage";
+import Stage from "./components/Stage";
 import { Suspense, useRef, useState } from "react";
-import { SongPicker } from "./SongPicker";
+import { SongPicker } from "./components/SongPicker";
 import {
 	Bloom,
 	DepthOfField,
@@ -66,9 +66,6 @@ function App() {
 						<Effects />
 						<Stage scale={0.1} />
 						<SongPicker />
-						{/* <group scale={0.1} position={[10, 1.8, 0]}>
-					<Avatar />
-				</group> */}
 					</PerformanceMonitor>
 				</Canvas>
 			</Suspense>
