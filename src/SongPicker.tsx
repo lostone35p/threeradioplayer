@@ -142,7 +142,9 @@ export function SongPicker() {
 					</Billboard>
 				</ScreenSizer>
 			</ScreenSpace>
-			<AudioVisualizer analyser={audioController.getAnalyser()} />
+			{playingRadio !== null && (
+				<AudioVisualizer analyser={audioController.getAnalyser()} />
+			)}
 			<CurrentlyPlaying props={radioData} />
 			<Image
 				position={[0, 6.3, 0]}
