@@ -7,7 +7,6 @@ import {
 	Box,
 	Text,
 	Html,
-	Image,
 } from "@react-three/drei";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { degToRad } from "three/src/math/MathUtils.js";
@@ -148,11 +147,6 @@ export function SongPicker() {
 			)}
 			<Avatar isPlaying={playingRadio !== null} />
 			<CurrentlyPlaying props={radioData} />
-			<Image
-				position={[0, 6.3, 0]}
-				url="/fallback/erika.png"
-				scale={[10, 5]}
-				rotation-y={degToRad(90)}></Image>
 		</group>
 	);
 }
@@ -167,9 +161,9 @@ export function CurrentlyPlaying({ props }: CurrentlyPlayingProps) {
 		<Text
 			anchorX={"center"}
 			anchorY={"middle"}
-			rotation-y={degToRad(90)}
-			position={[1, 7, 0]}
-			maxWidth={12}
+			rotation-y={degToRad(50)}
+			position={[8, 3, -9]}
+			maxWidth={5}
 			outlineWidth={0.03}
 			fontSize={1}>
 			{radioData

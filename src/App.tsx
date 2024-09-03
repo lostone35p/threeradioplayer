@@ -15,6 +15,7 @@ import {
 	Vignette,
 } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
+import MangaPanel, { Loadingimage } from "./components/MangaPanel";
 
 const panningMax = (value: number): number => {
 	if (value > 30) {
@@ -66,6 +67,9 @@ function App() {
 						<Effects />
 						<Stage scale={0.1} />
 						<SongPicker />
+						<Suspense fallback={<Loadingimage />}>
+							<MangaPanel />
+						</Suspense>
 					</PerformanceMonitor>
 				</Canvas>
 			</Suspense>
