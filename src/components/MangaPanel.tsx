@@ -1,5 +1,5 @@
 import useRandomPanel from "../hooks/useRandomPanel";
-import { Image, Html } from "@react-three/drei";
+import { Image } from "@react-three/drei";
 import { useRef } from "react";
 import { degToRad } from "three/src/math/MathUtils.js";
 
