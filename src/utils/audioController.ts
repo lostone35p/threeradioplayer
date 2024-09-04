@@ -13,6 +13,12 @@ class AudioController {
     this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
   }
 
+  setVolume(volume: number) {
+    this.audioElements.forEach((audio) => {
+      audio.volume = volume;
+    });
+  }
+
   loadRadio(name: string, url: string) {
     if (!this.audioElements.has(name)) {
       const audio = new Audio();

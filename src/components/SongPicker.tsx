@@ -128,27 +128,71 @@ interface CurrentlyPlayingProps {
 }
 
 export function CurrentlyPlaying({ props }: CurrentlyPlayingProps) {
+	const [volume, setVolume] = useState(1);
+	const [isMuted, setIsMuted] = useState(false);
+
+	const handleVolumeClick = (event: THREE.Event) => {
+		const clickedPosition = (event as any).uv.x;
+
+		// Calculate the width of "Volume : " text (approximately 8 characters)
+		const volumeTextWidth = 6 / 18; // Assuming total width is 18 characters
+
+		// Only process clicks after the "Volume : " text
+		if (clickedPosition > volumeTextWidth) {
+			const adjustedPosition =
+				(clickedPosition - volumeTextWidth) / (1 - volumeTextWidth);
+			const newVolume = Math.max(Math.ceil(adjustedPosition * 10) / 10, 0.1);
+			setVolume(newVolume);
+			audioController.setVolume(newVolume);
+			setIsMuted(false);
+		} else {
+			// Click on "Volume : " text toggles mute
+			setIsMuted(!isMuted);
+			audioController.setVolume(isMuted ? volume : 0);
+		}
+	};
+	const volumeBar = isMuted
+		? "▯  ".repeat(10)
+		: "▮".repeat(Math.round(volume * 10)) +
+			"▯".repeat(10 - Math.round(volume * 10));
+
 	const radioData = props;
 	return (
-		<Text
-			anchorX={"center"}
-			anchorY={"middle"}
-			rotation-y={degToRad(20)}
-			position={[0, 2.1, 0]}
-			outlineWidth={0.03}
-			fontSize={0.5}>
-			{radioData
-				? "main" in radioData
-					? `♫ ${(radioData as radioApi).main.np}`
-					: "SONGINFO" in radioData
-						? `♫ ${(radioData as gensokyoApi).SONGINFO.ARTIST} - ${(radioData as gensokyoApi).SONGINFO.TITLE}`
-						: "data" in radioData
-							? `♫ ${(radioData as doujinStyleApi).data.title}`
-							: "now_playing" in radioData
-								? `♫ ${(radioData as doujinDanceApi).now_playing.song.artist} - ${(radioData as doujinDanceApi).now_playing.song.title}`
-								: "Unknown Radio: Unknown track"
-				: "Choose a radio!"}
-		</Text>
+		<mesh>
+			<Text
+				anchorX={"center"}
+				anchorY={"middle"}
+				rotation-y={degToRad(20)}
+				position={[0, 2.1, 0]}
+				outlineWidth={0.03}
+				fontSize={0.5}>
+				{radioData
+					? "main" in radioData
+						? `♫ ${(radioData as radioApi).main.np}`
+						: "SONGINFO" in radioData
+							? `♫ ${(radioData as gensokyoApi).SONGINFO.ARTIST} - ${(radioData as gensokyoApi).SONGINFO.TITLE}`
+							: "data" in radioData
+								? `♫ ${(radioData as doujinStyleApi).data.title}`
+								: "now_playing" in radioData
+									? `♫ ${(radioData as doujinDanceApi).now_playing.song.artist} - ${(radioData as doujinDanceApi).now_playing.song.title}`
+									: "Unknown Radio: Unknown track"
+					: "Choose a radio!"}
+				{"\n"}
+			</Text>
+
+			<Text
+				anchorX={"center"}
+				anchorY={"middle"}
+				rotation-y={degToRad(20)}
+				position={[0, -22.1, 0]}
+				outlineWidth={0.03}
+				fontSize={0.5}
+				onClick={handleVolumeClick}
+				onPointerOver={(e) => (e.eventObject.scale.x = 1.1)}
+				onPointerOut={(e) => (e.eventObject.scale.x = 1)}>
+				{`Volume : ${volumeBar}`}
+			</Text>
+		</mesh>
 	);
 }
 
