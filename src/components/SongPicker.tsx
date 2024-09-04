@@ -6,7 +6,6 @@ import {
 	Scroll,
 	Box,
 	Text,
-	Html,
 } from "@react-three/drei";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { degToRad } from "three/src/math/MathUtils.js";
@@ -25,6 +24,7 @@ import { useFrame } from "@react-three/fiber";
 
 import * as THREE from "three";
 import { Avatar } from "./Avatar";
+import { RadioBox } from "./RadioBox";
 
 const fetchRadioData = async (api: string, name: string) => {
 	const { data } = await axios.get(api);
@@ -92,51 +92,24 @@ export function SongPicker() {
 	return (
 		<group>
 			<ScreenSpace depth={20}>
-				<ScreenSizer scale={5}>
-					<Billboard follow={false} position={[-20, 10, 1]} castShadow={true}>
+				<ScreenSizer scale={4.8}>
+					<Billboard follow={false} position={[-22, 10, 1]} castShadow={true}>
 						<ScrollControls
-							pages={1}
+							pages={2}
 							damping={0.01}
 							maxSpeed={0.05}
 							distance={0.01}>
 							<Scroll>
-								<group>
-									{radioList.map((radio, index) => (
-										<Box
-											rotation-y={degToRad(20)}
-											args={[10, 3, 0.5]}
-											position={[0, -4 * index, 0]}
-											key={index}>
-											<Html transform occlude>
-												<div
-													className="columns-4 flex align-middle justify-around w-96 items-center"
-													onPointerDown={(e) => e.stopPropagation()}>
-													<div>
-														<img
-															className=" w-auto h-24 aspect-square rounded-full"
-															src={radio.image}
-														/>
-													</div>
-													<div className=" items-center flex flex-col">
-														<h2 className=" text-3xl">{radio.name}</h2>
-													</div>
-													<div className=" items-center flex">
-														<button
-															className=" bg-white-200"
-															onClick={() => handlePlayPause(radio.name)}>
-															{playingRadio === radio.name ? "⏸" : "▶"}
-														</button>
-													</div>
-												</div>
-											</Html>
-											<meshStandardMaterial
-												emissive={playingRadio === radio.name ? "red" : "pink"}
-												emissiveIntensity={0.6}
-												polygonOffset={true}
-												polygonOffsetFactor={-3000}></meshStandardMaterial>
-										</Box>
-									))}
-								</group>
+								<CurrentlyPlaying props={radioData} />
+								{radioList.map((radio, index) => (
+									<RadioBox
+										key={index}
+										radio={radio}
+										index={index}
+										playingRadio={playingRadio}
+										handlePlayPause={handlePlayPause}
+									/>
+								))}
 							</Scroll>
 						</ScrollControls>
 					</Billboard>
@@ -146,7 +119,6 @@ export function SongPicker() {
 				<AudioVisualizer analyser={audioController.getAnalyser()} />
 			)}
 			<Avatar isPlaying={playingRadio !== null} />
-			<CurrentlyPlaying props={radioData} />
 		</group>
 	);
 }
@@ -161,22 +133,21 @@ export function CurrentlyPlaying({ props }: CurrentlyPlayingProps) {
 		<Text
 			anchorX={"center"}
 			anchorY={"middle"}
-			rotation-y={degToRad(50)}
-			position={[8, 3, -9]}
-			maxWidth={5}
+			rotation-y={degToRad(20)}
+			position={[0, 2.1, 0]}
 			outlineWidth={0.03}
-			fontSize={1}>
+			fontSize={0.5}>
 			{radioData
 				? "main" in radioData
-					? `${(radioData as radioApi).main.np}`
+					? `♫ ${(radioData as radioApi).main.np}`
 					: "SONGINFO" in radioData
-						? `${(radioData as gensokyoApi).SONGINFO.ARTIST} - ${(radioData as gensokyoApi).SONGINFO.TITLE}`
+						? `♫ ${(radioData as gensokyoApi).SONGINFO.ARTIST} - ${(radioData as gensokyoApi).SONGINFO.TITLE}`
 						: "data" in radioData
-							? `${(radioData as doujinStyleApi).data.title}`
+							? `♫ ${(radioData as doujinStyleApi).data.title}`
 							: "now_playing" in radioData
-								? `${(radioData as doujinDanceApi).now_playing.song.artist} - ${(radioData as doujinDanceApi).now_playing.song.title}`
+								? `♫ ${(radioData as doujinDanceApi).now_playing.song.artist} - ${(radioData as doujinDanceApi).now_playing.song.title}`
 								: "Unknown Radio: Unknown track"
-				: "Nothing Playing"}
+				: "Choose a radio!"}
 		</Text>
 	);
 }
