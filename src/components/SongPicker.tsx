@@ -95,7 +95,7 @@ export function SongPicker() {
 				<ScreenSizer scale={4.8}>
 					<Billboard follow={false} position={[-22, 10, 1]} castShadow={true}>
 						<ScrollControls
-							pages={2}
+							pages={1}
 							damping={0.01}
 							maxSpeed={0.05}
 							distance={0.01}>
