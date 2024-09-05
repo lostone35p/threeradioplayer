@@ -181,12 +181,12 @@ export function CurrentlyPlaying({ props }: CurrentlyPlayingProps) {
 			</Text>
 
 			<Text
-				anchorX={"center"}
 				anchorY={"middle"}
 				rotation-y={degToRad(20)}
 				position={[0, -22.1, 0]}
 				outlineWidth={0.03}
 				fontSize={0.5}
+				depthOffset={-4000}
 				onClick={handleVolumeClick}
 				onPointerOver={(e) => (e.eventObject.scale.x = 1.1)}
 				onPointerOut={(e) => (e.eventObject.scale.x = 1)}>

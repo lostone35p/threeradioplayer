@@ -32,7 +32,7 @@ export function RadioBox({
 				polygonOffset={true}
 				transparent
 				opacity={0.1}
-				polygonOffsetFactor={-3000}
+				polygonOffsetFactor={-4000}
 			/>
 			<Edges
 				polygonOffset={true}
