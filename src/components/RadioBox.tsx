@@ -42,7 +42,7 @@ export function RadioBox({
 				color={playingRadio === radio.name ? "pink" : "white"}
 			/>
 
-			<Html transform occlude>
+			<Html transform>
 				<div className="columns-4 flex align-middle justify-around w-96 items-center">
 					<div>
 						<img
