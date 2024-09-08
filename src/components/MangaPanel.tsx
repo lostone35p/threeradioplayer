@@ -20,12 +20,11 @@ const MangaPanel = React.memo(() => {
 					scale={[12, 6]}
 					rotation-y={degToRad(90)}
 				/>
-				<group position={[0, 8, -6.5]} rotation-y={degToRad(90)}>
-					<Circle onClick={() => refetch()} scale={0.2}></Circle>
-					<Text position={[0.5, -1, 0]} fontSize={0.3}>
-						{" "}
-						^ {"\n"} Refetch {"\n"} Panel
+				<group position={[0, 2.5, 0]} rotation-y={degToRad(90)}>
+					<Text position={[0, -0.5, 0]} fontSize={0.25}>
+						Refetch Panel
 					</Text>
+					<Circle onClick={() => refetch()} scale={0.2}></Circle>
 				</group>
 			</group>
 		);

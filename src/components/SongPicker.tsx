@@ -25,6 +25,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { Avatar } from "./Avatar";
 import { RadioBox } from "./RadioBox";
+import CoverArt from "./CoverArt";
 
 const fetchRadioData = async (api: string, name: string) => {
 	const { data } = await axios.get(api);
@@ -118,6 +119,12 @@ export function SongPicker() {
 			{playingRadio !== null && (
 				<AudioVisualizer analyser={audioController.getAnalyser()} />
 			)}
+			{radioData && playingRadio === "r/a/dio" ? (
+				<CoverArt props={radioData as radioApi} />
+			) : (
+				<mesh></mesh>
+			)}
+
 			<Avatar isPlaying={playingRadio !== null} />
 		</group>
 	);
